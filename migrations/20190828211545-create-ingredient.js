@@ -1,27 +1,18 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('recipes', {
+    return queryInterface.createTable('ingredients', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      cookTime: {
-        type: Sequelize.STRING
-      },
-      prepTime: {
-        type: Sequelize.STRING
-      },
       name: {
         type: Sequelize.STRING
       },
-      ingredients: {
+      amount: {
         type: Sequelize.STRING
-      },
-      instructions: {
-        type: Sequelize.JSON
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('recipes');
+    return queryInterface.dropTable('ingredients');
   }
 };

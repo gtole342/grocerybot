@@ -1,16 +1,30 @@
-const axios = require('axios');
-key = '&app_key=5397e2b3678d7d31055dd133c06aef44';
-id = '&app_id=d19a147b';
-query = 'q=chicken'
-url = 'https://api.edamam.com/search?';
+const fs = require('fs');
+const db = require('../models');
 
-axios.get(url+query+id+key).then((response)=>{
-  response.data.hits.forEach((each)=>{
-    console.log(each.recipe.label)
-    console.log(each.recipe.image)
-    console.log(each.recipe.label)
-    console.log(each.recipe.label)
-    console.log(each.recipe.label)
-
+var contents = fs.readFileSync(__dirname + '/../recipes.txt', 'utf8');
+var recipes = JSON.parse(contents);
+recipes.forEach((recipe)=>{
+  db.recipe.findOrCreate({
+   where: {
+    name: recipe.name
+  },
+  defaults: {
+    instructions: recipe.instructions
+  }
+  }).spread((recipe, created)=>{
+    for(var key in recipe.ingredients){
+      db.ingredient.findOrCreate({
+        where : {
+          name: key,
+          amount: recipe.ingredients[key]
+        }
+      })
+      .spread((ingredient, created)=>{
+        recipe.addIngredient(ingredient)
+        .then(()=>{
+          console.log('Success!');
+        });
+      });
+    }
   });
 });

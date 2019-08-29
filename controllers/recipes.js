@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const db = require('../models');
-const data = require('../testData');
+const recipe = require('../models').recipe;
 
 router.get('/', (req,res)=>{
-  db.recipes.findAll()
+  recipe.findAll()
   .then((recipes)=>{
     res.render('recipes/show', { recipes: recipes });
   });
@@ -14,21 +13,21 @@ router.get('/new', (req,res)=>{
   res.render('recipes/new');
 });
 router.post('/new', (req,res)=>{
-  db.recipes.create({
+  recipe.create({
     name: req.body.name,
     cookTime: req.body.cookTime,
     prepTime: req.body.prepTime,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions
   })
-  .then(()=>{
-    res.send('MADE A NEW ONE')
+  .then((recipe)=>{
+    res.redirect(`/recipes/${recipe.id}`);
   });
 });
 
 
 router.get('/:id', (req,res)=>{
-  db.recipes.findByPk(req.params.id)
+  recipe.findByPk(req.params.id)
   .then((recipe)=>{
     res.render('recipes/show', { recipe: recipe });
   });
@@ -36,19 +35,19 @@ router.get('/:id', (req,res)=>{
 
 
 router.delete('/:id/delete', (req,res)=>{
-  db.recipes.destroy({where: { id: req.params.id }}).then(()=>{
+  recipe.destroy({where: { id: req.params.id }}).then(()=>{
     res.send('THAT SHIT IS GONE');
-  })
+  });
 });
 
 
 router.get('/:id/edit', (req,res)=>{
-  db.recipes.findByPk(req.params.id).then((recipe)=>{
+  recipe.findByPk(req.params.id).then((recipe)=>{
   res.render('recipes/edit', { recipe: recipe});
   });
 });
 router.put('/:id/edit', (req,res)=>{
-  db.recipes.update({
+  recipe.update({
     where: {id: req.params.id},
     fields: {
       name: req.body.name,

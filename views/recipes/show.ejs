@@ -1,16 +1,16 @@
-<div>
-  <span><%= recipe.name  %></span>
-  <span>Prep Time:<%= recipe.prepTime %></span>
-  <span>Cook Time:<%= recipe.cookTime %></span> 
-</div>
-<div>
-  <ul>
-    <% for(var key in recipe.ingredients){ %>
-      <li><%= key %> : <%= recipe.ingredients[key] %></li>
-    <% } %>
-  </ul>
-  <% recipe.instructions.forEach((instruction)=>{ %>
-    <p><%= instruction %></p>
-  <%  }) %>
-</div>
-<button><a href="/recipes/delete">Delete Recipe</a></button>
+<% recipes.forEach((recipe)=>{ %>
+  <div>
+    <span><%= recipe.name  %></span>
+  </div>
+  <div>
+    <ul>
+      <% for(var key in recipe.ingredients){ %>
+        <li><%= key %> : <%= recipe.ingredients[key] %></li>
+      <% } %>
+    </ul>
+    <% recipe.instructions.forEach((instruction)=>{ %>
+      <p><%= instruction %></p>
+    <%  }) %>
+  </div>
+  <button><a href="/recipes/<%= recipe.id %>/delete">Delete Recipe</a></button>
+<% }) %>

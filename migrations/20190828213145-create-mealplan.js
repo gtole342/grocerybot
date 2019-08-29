@@ -8,28 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sunday: {
-        type: Sequelize.INTEGER
-      },
-      monday: {
-        type: Sequelize.INTEGER
-      },
-      tuesday: {
-        type: Sequelize.INTEGER
-      },
-      wednesday: {
-        type: Sequelize.INTEGER
-      },
-      thursday: {
-        type: Sequelize.INTEGER
-      },
-      friday: {
-        type: Sequelize.INTEGER
-      },
-      saturday: {
-        type: Sequelize.INTEGER
-      },
-      weekdate: {
+      daterange: {
         type: Sequelize.STRING
       },
       createdAt: {
