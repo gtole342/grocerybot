@@ -3,13 +3,13 @@
         <a href="/" class="brand-logo">grocerybot</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <% if(currentUser) { %>
-            <li><a href="/users">Profile</a></li>
+            <li><a href="/user">Profile</a></li>
           <% } else { %>
-            <li><a href="/users/new">Sign Up</a></li>
-            <li><a href="#">Log In</a></li>
+            <li><a href="/user/signup">Sign Up</a></li>
+            <li><a href="/user/login">Log In</a></li>
           <% } %>            
-          <li><a href="/mealplans">Meal Plan</a></li>
-          <li><a href="/recipes">Recipes</a></li>
+          <li><a href="/mealplan">Meal Plan</a></li>
+          <li><a href="/recipe">Recipes</a></li>
         </ul>
     </div>
   </nav>

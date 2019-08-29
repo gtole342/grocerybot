@@ -45,5 +45,9 @@ module.exports = (sequelize, DataTypes) => {
     models.user.belongsToMany(models.recipe, {through: 'userRecipes'});
     models.user.belongsToMany(models.mealplan, {through: 'mealplanRecipes'});
   };
+  user.prototype.validPassword = function(typedInPassword){
+    return bcrypt.compareSync(typedInPassword, this.password)
+  };
+  
   return user;
 };

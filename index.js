@@ -29,7 +29,7 @@ app.use((req,res,next)=>{
   next();
 });
 
-app.use('/users', require('./controllers/users'));
+app.use('/user', require('./controllers/user'));
 app.use('/recipes', require('./controllers/recipes'));
 app.use('/mealplans', require('./controllers/mealplans'));
 
@@ -42,4 +42,4 @@ app.get('*', (req, res)=>{
   res.render('404');
 });
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3000);

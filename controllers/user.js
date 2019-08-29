@@ -1,26 +1,31 @@
 const router = require('express').Router();
+const passport = require('../config/passportConfig');
+const isLoggedIn = require('../middleware/isLoggedIn');
 const user = require('../models').user;
 
 
-router.get('/:id/delete', (req,res)=>{
-  user.findByPk(req.params.id).then((user)=>{
-  res.render('users/delete', {user: user});
+router.get('/delete', (req,res)=>{
+  user.findByPk(currentUser.id).then((user)=>{
+    res.render('user/delete', {user: user});
   });
 });
-router.delete('/:id/delete', (req,res)=>{
-  user.destroy({where : {id: req.params.id }}).then(()=>{
-    res.send('THAT SHIT IS GONE');  
+router.delete('/delete', (req,res)=>{
+  user.destroy({
+    where : {id: req.params.id }
+  })
+  .then(()=>{
+    res.redirect('/');  
   });
 });
 
 
-router.get('/:id/edit', (req,res)=>{
+router.get('/edit', (req,res)=>{
   user.findByPk(req.params.id)
   .then((user)=>{
-    res.render('users/edit', {user: user})
+    res.render('user/edit', {user: user})
   });
 });
-router.put('/:id/edit', (req,res)=>{
+router.put('/edit', (req,res)=>{
   user.update({
     where: {id: req.params.id},
     fields: {
@@ -29,13 +34,13 @@ router.put('/:id/edit', (req,res)=>{
     }
   })
   .then(()=>{
-    res.redirect(`/users/${req.params.id}`)
+    res.redirect(`/user/${req.params.id}`)
   });
 });
 
 
 router.get('/signup', (req,res)=>{
-  res.render('users/new');
+  res.render('user/new');
 });
 router.post('/signup', (req,res)=>{
   user.findOrCreate({
@@ -72,15 +77,28 @@ router.post('/signup', (req,res)=>{
     res.redirect('/auth/singup');
   })
   .then(()=>{
-    res.redirect(`/users`);
+    res.redirect(`/user`);
   });
 });
 
-router.get('/:id', (req,res)=>{
-  user.findByPk(req.params.id)
-  .then((user)=>{
-    res.render('users/show', { user: user});
-  });
+router.get('/login', (req,res)=>{
+  res.render('user/login')
+});
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/user',
+  successFlash: 'Log in succesful',
+  failureRedirect: '/user/login',
+  failureFlash: 'Invalid Credentials'
+}));
+
+router.get('/logout', (req,res)=>{
+  req.logout();
+  req.flash('success', 'Log out successful');
+  res.redirect('/');
+});
+
+router.get('/', isLoggedIn, (req,res)=>{
+  res.render('user/show')
 });
 
 
