@@ -5,13 +5,14 @@ const user = require('../models').user;
 
 
 router.get('/delete', (req,res)=>{
-  user.findByPk(currentUser.id).then((user)=>{
+  console.log(req.user.id)
+  user.findByPk(req.user.id).then((user)=>{
     res.render('user/delete', {user: user});
   });
 });
 router.delete('/delete', (req,res)=>{
   user.destroy({
-    where : {id: req.params.id }
+    where : {id: req.user.id }
   })
   .then(()=>{
     res.redirect('/');  
@@ -20,21 +21,21 @@ router.delete('/delete', (req,res)=>{
 
 
 router.get('/edit', (req,res)=>{
-  user.findByPk(req.params.id)
+  user.findByPk(req.user.id)
   .then((user)=>{
     res.render('user/edit', {user: user})
   });
 });
 router.put('/edit', (req,res)=>{
   user.update({
-    where: {id: req.params.id},
+    where: {id: req.user.id},
     fields: {
       name: req.body.name,
       email: req.body.email
     }
   })
   .then(()=>{
-    res.redirect(`/user/${req.params.id}`)
+    res.redirect('/user')
   });
 });
 
@@ -42,7 +43,7 @@ router.put('/edit', (req,res)=>{
 router.get('/signup', (req,res)=>{
   res.render('user/new');
 });
-router.post('/signup', (req,res)=>{
+router.post('/signup', (req,res,next)=>{
   user.findOrCreate({
     where: { email: req.body.email },
     defaults: {
@@ -53,19 +54,19 @@ router.post('/signup', (req,res)=>{
   .spread((user, wasCreated)=>{
     if(wasCreated) {
       passport.authenticate('local', {
-        successRedirect: '/profile',
+        successRedirect: '/user',
         successFlash: 'Successful sign up. Welcome!',
-        failureRedirect: '/auth/login',
+        failureRedirect: '/user/login',
         failureFlash: 'This should never happen. Contact your administrator.'
       })(req, res, next);
     }
     else {
       req.flash('error', 'Account already exists. Please log in!');
-      res.redirect('/auth/login');
+      res.redirect('/user/login');
     }
   })
   .catch(err => {
-    console.log('Error in POST /auth/signup', err);
+    console.log('Error in POST /user/signup', err);
     req.flash('error', 'Something went awry!');
     if(err && err.errors){
       err.errors.forEach(e => {
@@ -74,15 +75,15 @@ router.post('/signup', (req,res)=>{
         }
       });
     }
-    res.redirect('/auth/singup');
+    res.redirect('/user/signup');
   })
   .then(()=>{
-    res.redirect(`/user`);
+    res.redirect('/user');
   });
 });
 
 router.get('/login', (req,res)=>{
-  res.render('user/login')
+  res.render('user/login');
 });
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/user',
@@ -98,7 +99,7 @@ router.get('/logout', (req,res)=>{
 });
 
 router.get('/', isLoggedIn, (req,res)=>{
-  res.render('user/show')
+  res.render('user/show');
 });
 
 

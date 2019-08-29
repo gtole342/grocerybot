@@ -3,7 +3,11 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const user = require('../models').user;
 
-passport.serializeUser((user, cb) =>{
+passport.serializeUser((user, cb)=>{
+  cb(null, user.id);
+})
+
+passport.deserializeUser((id, cb) =>{
   user.findByPk(id)
   .then(user =>{
     cb(null, user);
