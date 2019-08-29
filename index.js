@@ -1,6 +1,10 @@
+require('dotenv').config();
 const express = require('express');
+const flash = require('connect-flash');
+const moment = require('moment')
 const layouts = require('express-ejs-layouts');
 const passport = require('./config/passportConfig');
+const session = require('express-session');
 
 
 const app = express();
@@ -10,7 +14,7 @@ app.use(layouts);
 app.use(express.urlencoded({ extended: false}));
 app.use(express.static(__dirname + '/static'));
 app.use(session({
-  secret: 'seeeeecret',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true
 }));
@@ -32,6 +36,10 @@ app.use('/mealplans', require('./controllers/mealplans'));
 
 app.get('/', (req,res)=>{
   res.render('home');
+});
+
+app.get('*', (req, res)=>{
+  res.render('404');
 });
 
 app.listen(process.env.PORT || 3000)
