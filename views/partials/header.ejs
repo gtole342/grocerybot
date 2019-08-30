@@ -1,15 +1,25 @@
+<ul id="account-dropdown" class="dropdown-content">
+  <li><a href="/user/edit">Edit Account</a></li>
+  <li><a href="/user/delete">Delete Account</a></li>
+  <li><a href="/user/logout">Logout</a></li>
+</ul>
 <nav>
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">grocerybot</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <% if(currentUser) { %>
-            <li><a href="/user">Profile</a></li>
+            <li><a href="/mealplan">Meal Plan</a></li>
+            <li><a href="/recipe">Recipes</a></li>
+            <li>
+              <a class="dropdown-trigger" href="#" data-target="account-dropdown">
+                Profile
+                <i class="material-icons right">arrow_drop_down</i>
+              </a>
+            </li>
           <% } else { %>
             <li><a href="/user/signup">Sign Up</a></li>
             <li><a href="/user/login">Log In</a></li>
           <% } %>            
-          <li><a href="/mealplan">Meal Plan</a></li>
-          <li><a href="/recipe">Recipes</a></li>
         </ul>
     </div>
   </nav>

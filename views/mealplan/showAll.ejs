@@ -1,0 +1,10 @@
+<% for(var key in mealplans){ %>
+  <div class="card">
+    <h4><%= key %></h4>
+    <ul>
+    <% mealplans[key].forEach((recipe)=>{ %>
+      <li><%= recipe.name %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>

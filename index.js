@@ -5,6 +5,7 @@ const moment = require('moment')
 const layouts = require('express-ejs-layouts');
 const passport = require('./config/passportConfig');
 const session = require('express-session');
+const methodOverride = require('method-override');
 
 
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(layouts);
 app.use(express.urlencoded({ extended: false}));
+app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/static'));
 app.use(session({
   secret: process.env.SECRET,
@@ -30,8 +32,8 @@ app.use((req,res,next)=>{
 });
 
 app.use('/user', require('./controllers/user'));
-app.use('/recipes', require('./controllers/recipes'));
-app.use('/mealplans', require('./controllers/mealplans'));
+app.use('/recipe', require('./controllers/recipe'));
+app.use('/mealplan', require('./controllers/mealplan'));
 
 
 app.get('/', (req,res)=>{

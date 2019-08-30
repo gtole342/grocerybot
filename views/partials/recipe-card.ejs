@@ -1,0 +1,17 @@
+
+<div class="card col s12 m6 l4 recipe-card">
+  <div>
+    <span><%= recipe.name  %></span>
+  </div>
+  <div>
+    <ul>
+      <% for(var key in recipe.ingredients){ %>
+        <li><%= key %> : <%= recipe.ingredients[key] %></li>
+      <% } %>
+    </ul>
+    <% recipe.instructions.forEach((instruction)=>{ %>
+      <p><%= instruction %></p>
+    <%  }) %>
+  </div>
+  <button><a href="/recipe/<%= recipe.id %>/delete">Delete Recipe</a></button>
+</div>

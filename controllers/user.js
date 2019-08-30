@@ -3,30 +3,31 @@ const passport = require('../config/passportConfig');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const user = require('../models').user;
 
-
-router.get('/delete', (req,res)=>{
-  console.log(req.user.id)
-  user.findByPk(req.user.id).then((user)=>{
+const getDeleteUserPage = (req,res) => {
+  user.findByPk(req.user.id)
+  .then((user)=>{
     res.render('user/delete', {user: user});
   });
-});
-router.delete('/delete', (req,res)=>{
+};
+
+const deleteUser = (req,res) => {
   user.destroy({
     where : {id: req.user.id }
   })
   .then(()=>{
+    req.logout();
     res.redirect('/');  
   });
-});
+};
 
-
-router.get('/edit', (req,res)=>{
+const getEditUserPage = (req,res) =>{
   user.findByPk(req.user.id)
   .then((user)=>{
-    res.render('user/edit', {user: user})
+    res.render('user/edit', {user: user});
   });
-});
-router.put('/edit', (req,res)=>{
+};
+
+const editUser = (req,res) =>{
   user.update({
     where: {id: req.user.id},
     fields: {
@@ -37,13 +38,13 @@ router.put('/edit', (req,res)=>{
   .then(()=>{
     res.redirect('/user')
   });
-});
+};
 
-
-router.get('/signup', (req,res)=>{
+const getSignupPage = (req,res) => {
   res.render('user/new');
-});
-router.post('/signup', (req,res,next)=>{
+};
+
+const createUser = (req,res) => {
   user.findOrCreate({
     where: { email: req.body.email },
     defaults: {
@@ -80,27 +81,40 @@ router.post('/signup', (req,res,next)=>{
   .then(()=>{
     res.redirect('/user');
   });
-});
+};
 
-router.get('/login', (req,res)=>{
+const getLoginPage = (req,res) => {
   res.render('user/login');
-});
-router.post('/login', passport.authenticate('local', {
+}
+
+const passportAuth = passport.authenticate('local', {
   successRedirect: '/user',
   successFlash: 'Log in succesful',
   failureRedirect: '/user/login',
   failureFlash: 'Invalid Credentials'
-}));
-
-router.get('/logout', (req,res)=>{
-  req.logout();
-  req.flash('success', 'Log out successful');
-  res.redirect('/');
 });
 
-router.get('/', isLoggedIn, (req,res)=>{
-  res.render('user/show');
-});
+const logoutUser = (req,res) => {
+    req.logout();
+    req.flash('success', 'Log out successful');
+    res.redirect('/');
+};
+
+const getUserPage = (req,res) => {
+  res.render('user/show', {user: req.user});
+};
+
+
+router.get('/delete', getDeleteUserPage);
+router.delete('/', deleteUser);
+router.get('/edit', getEditUserPage);
+router.put('/edit', editUser);
+router.get('/signup', getSignupPage);
+router.post('/signup', createUser);
+router.get('/login', getLoginPage);
+router.post('/login', passportAuth);
+router.get('/logout', logoutUser);
+router.get('/', isLoggedIn, getUserPage);
 
 
 module.exports = router;
