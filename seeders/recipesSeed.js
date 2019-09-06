@@ -37,7 +37,7 @@ recipes.forEach(async (recipe)=>{
   db.recipe.create({
     name: recipe.name,
     instructions: recipe.instructions,
-    calorie: totalCalories,
+    calories: totalCalories,
     protein: totalProtein,
     fat: totalFat,
     carbs: totalCarbs

@@ -7,6 +7,9 @@
           <span><%= recipe.calories %></span>
         </div>
         <div class="collapsible-body">
+          <span><%= recipe.protein %> grams of Protein</span>
+          <span><%= recipe.carbs %> grams of Carbs</span>
+          <span><%= recipe.fat %> grams of Fat</span>
           <ul>
             <% for(var key in recipe.ingredients){ %>
               <li><%= recipe.ingredients[key].amount %> <%= recipe.ingredients[key].name %></li>
