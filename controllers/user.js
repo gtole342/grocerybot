@@ -78,9 +78,6 @@ const createUser = (req,res,next) => {
     }
     res.redirect('/user/signup');
   })
-  .then(()=>{
-    res.redirect('/user');
-  });
 };
 
 const getLoginPage = (req,res) => {
