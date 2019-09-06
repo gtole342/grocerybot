@@ -32,7 +32,8 @@ const editUser = (req,res) =>{
     where: {id: req.user.id},
     fields: {
       name: req.body.name,
-      email: req.body.email
+      email: req.body.email,
+      password: req.body.password
     }
   })
   .then(()=>{

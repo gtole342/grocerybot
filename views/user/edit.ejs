@@ -1,0 +1,18 @@
+<h1>Update User info</h1>
+<form action="/user/?_method=PUT" method="POST">
+  <div>
+    <label>Name:</label>
+    <input type="text" name="name" placeholder="<%= user.name %>">
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="text" name="email" placeholder="<%= user.email %>">
+  </div> 
+   <div>
+    <label>Password:</label>
+    <input type="password" name="password">
+  </div>
+  <div>
+    <input type="submit" value="Submit">
+  </div>
+</form>
