@@ -1,11 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const mealplan = sequelize.define('mealplan', {
-    daterange: DataTypes.STRING
+    weekdate: DataTypes.STRING,
+    userId: DataTypes.INTEGER
   }, {});
   mealplan.associate = function(models) {
-    // associations can be defined here
-    models.mealplan.belongsToMany(models.recipe, {through: 'mealplanRecipes'});
+    models.mealplan.belongsToMany(models.recipe, {through: 'mealplansRecipes'});
     models.mealplan.belongsTo(models.user);
   };
   return mealplan;

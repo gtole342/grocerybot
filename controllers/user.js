@@ -44,7 +44,7 @@ const getSignupPage = (req,res) => {
   res.render('user/new');
 };
 
-const createUser = (req,res) => {
+const createUser = (req,res,next) => {
   user.findOrCreate({
     where: { email: req.body.email },
     defaults: {

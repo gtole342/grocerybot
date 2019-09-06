@@ -6,7 +6,8 @@
   <div>
     <ul>
       <% for(var key in recipe.ingredients){ %>
-        <li><%= key %> : <%= recipe.ingredients[key] %></li>
+        <% let ingredient =  recipe.ingredients[key].dataValues %>
+        <li><%= ingredient.name %> : <%= ingredient.amount %></li>
       <% } %>
     </ul>
     <% recipe.instructions.forEach((instruction)=>{ %>

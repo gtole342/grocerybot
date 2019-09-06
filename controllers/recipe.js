@@ -5,101 +5,102 @@ const ingredient = require('../models').ingredient;
 const getAllRecipesPage = (req,res) => {
   recipe.findAll({ include: [ingredient] })
   .then((recipes)=>{
-    res.render('recipes/show', { recipes: recipes });
+    console.log(recipes)
+    res.render('recipe/showAll', { recipes: recipes });
   });
 };
 
-const getNewRecipePage = (req,res) => {
-  res.render('recipes/new');
-};
+// const getNewRecipePage = (req,res) => {
+//   res.render('recipe/new');
+// };
 
-const postNewRecipe = (req,res) => {
-  recipe.create({
-    name: req.body.name,
-    cookTime: req.body.cookTime,
-    prepTime: req.body.prepTime,
-    instructions: req.body.instructions
-  })
-  .then((recipe)=>{
-    req.body.ingredients.forEach( async (ingredient)=>{
-      await recipe.createIngredient({
-        name: ingredient.name,
-        amount: ingredient.amount,
-      });
-    });
-    return recipe.id;
-  })
-  .then((id)=>{
-   res.redirect(`/recipes/${id}`);
-  });
-};
+// const postNewRecipe = (req,res) => {
+//   recipe.create({
+//     name: req.body.name,
+//     cookTime: req.body.cookTime,
+//     prepTime: req.body.prepTime,
+//     instructions: req.body.instructions
+//   })
+//   .then((recipe)=>{
+//     req.body.ingredients.forEach( async (ingredient)=>{
+//       await recipe.createIngredient({
+//         name: ingredient.name,
+//         amount: ingredient.amount,
+//       });
+//     });
+//     return recipe.id;
+//   })
+//   .then((id)=>{
+//    res.redirect(`/recipe/${id}`);
+//   });
+// };
 
 const getRecipePage = (req,res) => {
-  recipe.find({
-    where: { id: req.params.id},
+  recipe.findByPk(req.params.id, {
     include: [ingredient]
   })
   .then((recipe)=>{
-    res.render('recipes/show', { recipe: recipe });
+    console.log(recipe.ingredients[0].dataValues.name);
+    res.render('recipe/show', { recipe: recipe });
   });
 };
 
-const deleteRecipe = (req,res) => {
-  recipe.destroy({
-    where: { id: req.params.id },
-    include: [ingredient]
-  })
-  .then(()=>{
-    res.send('/recipes');
-  });
-};
+// const deleteRecipe = (req,res) => {
+//   recipe.destroy({
+//     where: { id: req.params.id },
+//     include: [ingredient]
+//   })
+//   .then(()=>{
+//     res.send('/recipe');
+//   });
+// };
 
-const getEditRecipePage = (req,res) => {
-  recipe.find({
-    where: {id: req.params.id},
-    include: [ingredient]
-  })
-  .then((recipe)=>{
-    res.render('recipe/edit', { recipe: recipe});
-  });
-};
+// const getEditRecipePage = (req,res) => {
+//   recipe.find({
+//     where: {id: req.params.id},
+//     include: [ingredient]
+//   })
+//   .then((recipe)=>{
+//     res.render('recipe/edit', { recipe: recipe});
+//   });
+// };
 
-const editRecipe = (req,res) => {
-  recipe.update({
-    where: {id: req.params.id},
-    fields: {
-      name: req.body.name,
-      cookTime: req.body.cookTime,
-      prepTime: req.body.prepTime,
-      instructions: req.body.instructions
-    }
-  })
-  .then((recipe)=>{
-    recipe.getIngredients()
-    .then((ingredients)=>{
-      ingredients.forEach( async (each)=>{
-        await ingredient.update({
-          where: {
-            name: each.name,
-            amount: each.amount
-          },
-          fields: {
-            name: each.name,
-            amount: each.amount
-          }
-        });
-      });
-    });
-  });
-};
+// const editRecipe = (req,res) => {
+//   recipe.update({
+//     where: {id: req.params.id},
+//     fields: {
+//       name: req.body.name,
+//       cookTime: req.body.cookTime,
+//       prepTime: req.body.prepTime,
+//       instructions: req.body.instructions
+//     }
+//   })
+//   .then((recipe)=>{
+//     recipe.getIngredients()
+//     .then((ingredients)=>{
+//       ingredients.forEach( async (each)=>{
+//         await ingredient.update({
+//           where: {
+//             name: each.name,
+//             amount: each.amount
+//           },
+//           fields: {
+//             name: each.name,
+//             amount: each.amount
+//           }
+//         });
+//       });
+//     });
+//   });
+// };
 
 router.get('/', getAllRecipesPage);
-router.get('/new', getNewRecipePage);
-router.post('/new', postNewRecipe);
+// router.get('/new', getNewRecipePage);
+// router.post('/new', postNewRecipe);
 router.get('/:id', getRecipePage);
-router.delete('/:id/delete', deleteRecipe);
-router.get('/:id/edit', getEditRecipePage);
-router.put('/:id/edit', editRecipe);
+// router.delete('/:id/delete', deleteRecipe);
+// router.get('/:id/edit', getEditRecipePage);
+// router.put('/:id/edit', editRecipe);
 
 
 module.exports = router;

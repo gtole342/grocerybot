@@ -1,15 +1,15 @@
 <ul class="collapsible">
-  <% mealplan.forEach((recipe)=>{ %>
+  <% let recipes = mealplan.dataValues.recipes %>
+  <% recipes.forEach((recipe)=>{ %>
     <li>
         <div class="collapsible-header">
           <span><%= recipe.name  %></span>
-          <span>Prep Time:<%= recipe.prepTime %></span>
-          <span>Cook Time:<%= recipe.cookTime %></span> 
+          <span><%= recipe.calories %></span>
         </div>
         <div class="collapsible-body">
           <ul>
             <% for(var key in recipe.ingredients){ %>
-              <li><%= key %> : <%= recipe.ingredients[key] %></li>
+              <li><%= recipe.ingredients[key].amount %> <%= recipe.ingredients[key].name %></li>
             <% } %>
           </ul>
           <% recipe.instructions.forEach((instruction)=>{ %>

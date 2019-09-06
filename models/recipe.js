@@ -2,15 +2,18 @@
 module.exports = (sequelize, DataTypes) => {
   const recipe = sequelize.define('recipe', {
     name: DataTypes.STRING,
+    userId: DataTypes.INTEGER,
     instructions: DataTypes.JSON,
-    prep: DataTypes.STRING,
-    cook: DataTypes.STRING
+    calories: DataTypes.STRING,
+    protein: DataTypes.FLOAT,
+    fat: DataTypes.FLOAT,
+    carbs: DataTypes.FLOAT,
+
   }, {});
   recipe.associate = function(models) {
-    // associations can be defined here
-    models.recipe.hasMany(models.ingredient);
-    models.recipe.belongsToMany(models.mealplan, {through: 'mealplanRecipes'});
-    models.recipe.belongsToMany(models.user, {through: 'userRecipes'})
+    models.recipe.belongsToMany(models.ingredient, {through: 'recipesIngredients'});
+    models.recipe.belongsToMany(models.mealplan, {through: 'mealplansRecipes'});
+    models.recipe.belongsTo(models.user);
   };
   return recipe;
 };

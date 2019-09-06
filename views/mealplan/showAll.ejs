@@ -1,10 +1,14 @@
-<% for(var key in mealplans){ %>
-  <div class="card">
-    <h4><%= key %></h4>
-    <ul>
-    <% mealplans[key].forEach((recipe)=>{ %>
-      <li><%= recipe.name %></li>
-      <% }) %>
-    </ul>
+<% mealplans.forEach((mealplan)=>{ %>
+  <div class="row">
+    <a class="card col s12 m4 l3" href="/mealplan/<%= mealplan.weekdate %>">
+     <h4><%= mealplan.weekdate %></h4>
+     <ul>
+     <% mealplan.recipes.forEach((recipe)=>{ %>
+      <% console.log(recipe) %>
+      <li><%= recipe.name %>: <%= recipe.calories %> calories</li>
+
+     <% }) %>
+     </ul>
+   </a>
   </div>
-<% } %>
+<% }) %>
