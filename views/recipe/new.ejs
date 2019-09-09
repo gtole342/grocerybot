@@ -1,4 +1,5 @@
-<form action="/recipe" method="POST">
+<div class="card white">
+  <form action="/recipe" method="POST">
     <div>
       <label>Name:</label>
       <input type="text" name="name">
@@ -11,13 +12,14 @@
     </div>  
     <div>
       <label>Ingredients:</label>
-      <input type="text" name="ingredients" id="ingredients">
+      <textarea name="ingredients" id="ingredients" placeholder="Seperate recipes by commas."></textarea>
     </div>
     <div>
       <label>Instructions:</label>
-      <input type="text" name="instructions" id="instructions">
+      <textarea name="instructions" id="instructions" placeholder="Seperate steps by commas."></textarea>
     </div>
     <div>
       <input type="submit" value="Submit">
     </div>
   </form>
+</div>

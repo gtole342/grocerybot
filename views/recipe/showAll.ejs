@@ -1,7 +1,11 @@
 <div class="container">
   <div class="row">
     <% recipes.forEach((recipe)=>{ %>
-        <%- include ../partials/recipe-preview-card %>
+      <a class="card col s12 m4 l3 recipe-preview-card" href="/recipe/<%= recipe.id %>">
+        <div>
+            <span><%= recipe.name  %></span>
+        </div>
+      </a>
     <% }) %>
   </div>
 </div>

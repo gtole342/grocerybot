@@ -3,22 +3,35 @@
   <% recipes.forEach((recipe)=>{ %>
     <li>
         <div class="collapsible-header">
-          <span><%= recipe.name  %></span>
-          <span> <%= recipe.calories %> calories</span>
+          <span><%= recipe.name  %>&nbsp|&nbsp</span>
+          <span><%= parseFloat(recipe.calories).toFixed(2)  %> cals</span>
         </div>
-        <div class="collapsible-body">
-          <span><%= recipe.protein %> grams of Protein</span>
-          <span><%= recipe.carbs %> grams of Carbs</span>
-          <span><%= recipe.fat %> grams of Fat</span>
-          <ul>
-            <% for(var key in recipe.ingredients){ %>
-              <li><%= recipe.ingredients[key].amount %> <%= recipe.ingredients[key].name %></li>
-            <% } %>
-          </ul>
-          <% recipe.instructions.forEach((instruction)=>{ %>
-            <p><%= instruction %></p>
-          <%  }) %>
+        <div class="collapsible-body white">
+          <div class="row">
+            <span class="col s4"><%= parseFloat(recipe.protein).toFixed(2) %> grams of Protein</span>
+            <span class="col s4"><%= parseFloat(recipe.carbs).toFixed(2) %> grams of Carbs</span>
+            <span class="col s4"><%= parseFloat(recipe.fat).toFixed(2) %> grams of Fat</span>
+          </div>
+          <div>
+            <ul>
+              <% for(var key in recipe.ingredients){ %>
+                <li><%= recipe.ingredients[key].amount %> <%= recipe.ingredients[key].name %></li>
+              <% } %>
+            </ul>
+          </div>
+          <div>
+            <% recipe.instructions.forEach((instruction)=>{ %>
+              <p><%= instruction %></p>
+            <%  }) %>
+          </div>
+          <form action="/mealplan/<%= mealplan.weekdate %>/edit/?_method=PUT" method="POST">
+            <input type="hidden" value="<%= recipe.id %>" name="recipe">
+            <input type="submit" value="Change Recipe">
+          </form>
         </div>
     </li>
   <% }) %>
 </ul>
+<form method="POST" action="/mealplan/<%= mealplan.id %>/delete/?_method=DELETE">
+  <input type="submit" value="Delete Mealplan">
+</form>

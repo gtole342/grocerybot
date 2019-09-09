@@ -1,12 +1,30 @@
-<div class="container">  
+<div class="container white card">  
   <div class="row">
     <div class="col s4 offset-s4">
       <h5>Welcome back, <%= user.name %></h5>
     </div>
   </div>
   <div class="row">
-    <form action="/mealplan/new" method="POST">
-      <input type="submit" value="Make new mealplan">
-    </form>
+    <span>Mealplans</span>
+    <% mealplans.forEach((mealplan)=>{ %>
+    <a class="card col s2" href="/mealplan/<%= mealplan.weekdate %>">
+      <%= mealplan.weekdate %>
+    </a>
+    <% }) %>
+    <div>
+      <form action="/mealplan/new" method="POST">
+        <input type="submit" value="Make new mealplan" class="card">
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <span>Recipes</span>
+    <% recipes.forEach((recipe)=>{ %>
+    <a class="card col s2" href="/recipe/<%= recipe.id %>">
+      <%= recipe.name %>
+    </a>
+    <% }) %>
+    <div>
+    </div>
   </div>
 </div>

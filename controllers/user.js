@@ -2,6 +2,8 @@ const router = require('express').Router();
 const passport = require('../config/passportConfig');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const user = require('../models').user;
+const mealplan = require('../models').mealplan;
+const recipe = require('../models').recipe;
 
 const getDeleteUserPage = (req,res) => {
   user.findByPk(req.user.id)
@@ -99,7 +101,12 @@ const logoutUser = (req,res) => {
 };
 
 const getUserPage = (req,res) => {
-  res.render('user/show', {user: req.user});
+  user.findByPk(req.user.id,{
+    include: [mealplan, recipe]
+  })
+  .then((user)=>{
+    res.render('user/show', {user: req.user, mealplans: user.mealplans, recipes: user.recipes});
+  });
 };
 
 

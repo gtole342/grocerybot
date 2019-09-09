@@ -4,20 +4,38 @@
   <li><a href="/user/delete">Delete Account</a></li>
   <li><a href="/user/logout">Logout</a></li>
 </ul>
+<ul id="recipes-dropdown" class="dropdown-content">
+  <li><a href="/recipe/all">All Recipes</a></li>
+  <li><a href="/recipe">View Your Recipes</a></li>
+  <li><a href="/recipe/new">Submit New Recipe</a></li>
+</ul>
+<ul id="account-dropdown" class="dropdown-content">
+  <li><a href="/user">Account Home</a></li>
+  <li><a href="/user/edit">Edit Account</a></li>
+  <li><a href="/user/delete">Delete Account</a></li>
+  <li><a href="/user/logout">Logout</a></li>
+</ul>
 <nav>
     <div class="nav-wrapper">
-        <a href="/" class="brand-logo">grocerybot</a>
+        <% if(currentUser) { %>
+        <a href="/user" class="brand-logo">grocerybot</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <% if(currentUser) { %>
-            <li><a href="/mealplan">Meal Plan</a></li>
-            <li><a href="/recipe">Recipes</a></li>
-            <li>
-              <a class="dropdown-trigger" href="#" data-target="account-dropdown">
-                Profile
-                <i class="material-icons right">arrow_drop_down</i>
-              </a>
-            </li>
-          <% } else { %>
+          <li><a href="/mealplan">Meal Plan</a></li>
+          <li>
+            <a class="dropdown-trigger" href="#" data-target="recipes-dropdown">
+              Recipes
+              <i class="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-trigger" href="#" data-target="account-dropdown">
+              Profile
+              <i class="material-icons right">arrow_drop_down</i>
+            </a>
+          </li>
+        <% } else { %>
+          <a href="/user" class="brand-logo">grocerybot</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/user/signup">Sign Up</a></li>
             <li><a href="/user/login">Log In</a></li>
           <% } %>            

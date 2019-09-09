@@ -1,9 +1,12 @@
-.recipe-card{
-  height: 300px;
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-image: url('https://imgur.com/kP3ikMO.jpg');
+  background-size: cover;
+
 }
-.recipe-preview-card{
-  height: 300px;
-}
-img{
-  width: 100%;
+
+main {
+  flex: 1 0 auto;
 }

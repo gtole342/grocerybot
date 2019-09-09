@@ -1,6 +1,6 @@
 
 <% if (alerts && alerts.error) { %>
-  <div class="error-box closeable-box">
+  <div class="error-box closeable-box red">
     <button id="close-error" class="close-button">X</button>
     <h2>Error:</h2>
     <hr>
@@ -11,7 +11,7 @@
 <% } %>
 
 <% if (alerts && alerts.success) { %>
-  <div class="success-box closeable-box">
+  <div class="success-box closeable-box green">
     <button id="close-success" class="close-button">X</button>
     <h2>Success:</h2>
     <hr>
