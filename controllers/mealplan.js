@@ -73,8 +73,6 @@ const editMealPlan = (req,res) => {
     include: [recipe]
   })
   .then((mealplan)=>{
-    console.log(mealplan.id)
-    console.log(req.body.recipe)
     mealplansRecipes.destroy({
       where: {
         mealplanId: mealplan.id,
